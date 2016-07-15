@@ -5,6 +5,7 @@ USAGE
 Add `gocollect` to topfile
 
 example:
+
     base:
       '*':
         - gocollect-formula 
