@@ -1,0 +1,5 @@
+gocollect:
+  conf:
+    push_url: https://example.com/push
+    register_url: https://example.com/register
+
