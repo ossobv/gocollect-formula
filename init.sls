@@ -10,19 +10,19 @@ osso_repository_src:
     - file: /etc/apt/sources.list.d/osso-ppa.list
     - key_url: https://ppa.osso.nl/support+ppa@osso.nl.gpg
 
-gocollect:
+install_gocollect:
   pkg.latest:
+    - pkgs:
+      - gocollect
+      {% if grains.virtual == 'physical' %}
+      - gocollect-hardware
+      {% endif %}
     - require:
       - pkgrepo: osso_repository
-
-{% if grains.virtual == 'physical' %}
-gocollect-hardware:
-  pkg.latest:
-    - require:
-      - pkgrepo: osso_repository
-{% endif %}
+      - file: /etc/gocollect.conf
 
 /etc/gocollect.conf:
   file.managed:
     - source: salt://gocollect-formula/files/etc/gocollect.conf
+    - template: jinja
     - context: {{ salt['pillar.get']('gocollect:conf', {}) }}
